@@ -21,6 +21,9 @@ class Book(db.Model, SerializerMixin):
     members = association_proxy('loans', 'member',
                     creator=lambda project_obj: Loan(project=project_obj))
 
+    def __repr__(self):
+        return f'<Book {self.id}: {self.title}, {self.author}, {self.publish_year}, {self.page}, {self.image_url}, {self.summary}>'
+
 
 class Member(db.Model, SerializerMixin):
     __tablename__='members'
@@ -38,6 +41,8 @@ class Member(db.Model, SerializerMixin):
     books = association_proxy('loans', 'book',
                 creator=lambda project_obj: Loan(project=project_obj))
 
+    def __repr__(self):
+        return f'<Member {self.id}: {self.first_name}, {self.last_name}, {self.user_id}, {self.email}>'
 
 class Loan(db.Model, SerializerMixin):
     __tablename__ = 'loans'
@@ -51,3 +56,6 @@ class Loan(db.Model, SerializerMixin):
     # Add relationships
     book = db.relationship('Book', back_populates='loans')
     member = db.relationship('Member', back_populates='loans')
+
+    def __repr__(self):
+        return f'<Loan {self.id}: {self.loan_date}, {self.returned_date}. {self.book_id}, {self.member_id}>'
