@@ -22,22 +22,8 @@ class Book(db.Model, SerializerMixin):
                     creator=lambda project_obj: Loan(project=project_obj))
 
 
-class Loan(db.Model, SerializerMixin):
-    __tablename__ = 'loans'
-    serialize_rules = ('-book.loans', '-member.books','member.loans')
-
-    id = db.Column(db.Integer, primary_key=True)
-    loan_date = db.Column(db.DateTime, server_default=db.func.now())
-    returned_date = db.Column(db.DateTime)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
-    member_id = db.Column(db.Integer, db.ForeignKey('members.id'))
-    # Add relationships
-    book = db.relationship('Book', back_populates='loans')
-    member = db.relationship('Member', back_populates='loans')
-
-
 class Member(db.Model, SerializerMixin):
-    __tablename__='member'
+    __tablename__='members'
     serialize_rules = ('-loans.member','-books.members', '-books.loans')
 
     id = db.Column(db.Integer, primary_key=True)
@@ -51,3 +37,17 @@ class Member(db.Model, SerializerMixin):
     loans = db.relationship('Loan', back_populates='member')
     books = association_proxy('loans', 'book',
                 creator=lambda project_obj: Loan(project=project_obj))
+
+
+class Loan(db.Model, SerializerMixin):
+    __tablename__ = 'loans'
+    serialize_rules = ('-book.loans', '-member.books','member.loans')
+
+    id = db.Column(db.Integer, primary_key=True)
+    loan_date = db.Column(db.DateTime, server_default=db.func.now())
+    returned_date = db.Column(db.DateTime)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    member_id = db.Column(db.Integer, db.ForeignKey('members.id'))
+    # Add relationships
+    book = db.relationship('Book', back_populates='loans')
+    member = db.relationship('Member', back_populates='loans')
