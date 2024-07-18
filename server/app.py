@@ -23,11 +23,45 @@ class Members(Resource):
         members_dict = [member.to_dict() for member in members]
         return make_response(members_dict, 200)
 
+    def post(self):
+        json_data = request.get_json()
+        new_record = Member(
+            first_name=json_data.get('first_name'),
+            last_name=json_data.get('last_name'),
+            user_id=json_data.get('user_id'),
+            email=json_data.get('email'),
+        )
+        db.session.add(new_record)
+        db.session.commit()
+        if not new_record.id:
+            return {'error': ['validation errors']}, 400
+        return make_response(new_record.to_dict(), 201)
+
 class MemberById(Resource):
-    def get(self):
+    def get(self,id):
         member = Member.query.filter(Menber.id==id).first()
         if not member: 
             return {'error': 'Member not found'}, 404
+        return make_response(member.to_dict(), 200)
+
+    def patch(self,id):
+        member = Member.query.filter(Menber.id==id).first()
+        if not member: 
+            return {'error': 'Member not found'}, 404
+        json_data = request.get_json()
+        if "@" not in json_data.get('email'):
+            return {'error': ['validation errors']}, 400
+        if 'email' in json_data:
+            member.email = json_data.get('email')
+        
+        db.session.add(member)
+        db.session.commit()
+
+    def delete(self,id):
+        member = Member.query.filter(Menber.id==id).first()
+        if not member: 
+            return {'error': 'Member not found'}, 404
+        db.session.delete(member)
 
 class Books(Resource):
     def get(self):
