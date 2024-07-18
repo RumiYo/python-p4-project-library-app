@@ -15,6 +15,7 @@ class Book(db.Model, SerializerMixin):
     page = db.Column(db.Integer)
     image_url = db.Column(db.String)
     summary = db.Column(db.String)
+    star = db.Column(db.Float)
 
     # Add relationships
     loans = db.relationship('Loan', back_populates='book')

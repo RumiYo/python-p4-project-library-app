@@ -26,6 +26,7 @@ def upgrade():
     sa.Column('page', sa.Integer(), nullable=True),
     sa.Column('image_url', sa.String(), nullable=True),
     sa.Column('summary', sa.String(), nullable=True),
+    sa.Column('star', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('members',
