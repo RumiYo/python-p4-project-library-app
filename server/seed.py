@@ -10,6 +10,7 @@ import random
 # Local imports
 from app import app
 from models import db, Book, Member, Loan
+from datetime import datetime, timedelta
 
 fake = Faker()
 
@@ -52,26 +53,36 @@ def create_books():
 
     return books
 
-# def create_lean():
+# def create_loans():
 #     loans = []
 
 #     for _ in range(10):
+#         start = "2023-01-01"
+#         end = datetime.today() - timedelta(days=30)
 #         l = Loan(
-#                 loan_date = 
-#                 returned_date = 
+#                 loan_date = fake.date_between(start_date=start,end_date=end),
 #                 book_id=rc([book.id for book in books]), 
 #                 member_id = rc([member.id for member in members])
 #         )
+#         l.returned_date = l.loan_date + timedelta(days=random.randint(7, 30))
 #         loans.append(l)
 #     return loans
 
-        # for _ in range(20):
-        # s = Signup(
-        #     time=rc(range(24)),
-        #     camper_id=rc([camper.id for camper in campers]),
-        #     activity_id=rc([activity.id for activity in activities])
-        # )
-        # signups.append(s)
+def create_loans():
+    loans = []
+
+    for _ in range(10):
+        start = datetime.strptime("2023-01-01", "%Y-%m-%d")
+        end = datetime.today() - timedelta(days=30)
+        l = Loan(
+                loan_date= datetime.strptime(str(fake.date_between_dates(start, end)), "%Y-%m-%d"),
+                book_id=rc([book.id for book in books]), 
+                member_id = rc([member.id for member in members])
+        )
+        random_days = random.randint(7, 40)
+        l.returned_date = l.loan_date + timedelta(days=random_days)
+        loans.append(l)
+    return loans
 
 
 if __name__ == '__main__':
@@ -80,6 +91,7 @@ if __name__ == '__main__':
         print('Cleaning db...')
         Member.query.delete()
         Book.query.delete()
+        Loan.query.delete()
 
         print("Starting seed...")
 
@@ -94,6 +106,8 @@ if __name__ == '__main__':
         db.session.commit()
 
         print('Seeding loans...')
-        # loans = create_loans()
+        loans = create_loans()
+        db.session.add_all(loans)
+        db.session.commit()
 
         print("Done seeding!")
