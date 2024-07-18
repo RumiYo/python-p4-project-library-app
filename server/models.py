@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.orm import validates
 
 from config import db
 
@@ -22,6 +23,12 @@ class Book(db.Model, SerializerMixin):
     members = association_proxy('loans', 'member',
                     creator=lambda project_obj: Loan(project=project_obj))
 
+    @validates('star')
+    def validate_star(self, key, star):
+        if star < 0 or star > 5:
+            raise ValueError('Star must be between 0 and 5')
+        return star
+
     def __repr__(self):
         return f'<Book {self.id}: {self.title}, {self.author}, {self.publish_year}, {self.page}, {self.image_url}, {self.summary}>'
 
@@ -42,6 +49,12 @@ class Member(db.Model, SerializerMixin):
     books = association_proxy('loans', 'book',
                 creator=lambda project_obj: Loan(project=project_obj))
 
+    @validates('email')
+    def validate_email(self, key, email):
+        if '@' not in email:
+             raise ValueError("Email address validation error")
+        return email
+
     def __repr__(self):
         return f'<Member {self.id}: {self.first_name}, {self.last_name}, {self.user_id}, {self.email}>'
 
@@ -57,6 +70,9 @@ class Loan(db.Model, SerializerMixin):
     # Add relationships
     book = db.relationship('Book', back_populates='loans')
     member = db.relationship('Member', back_populates='loans')
+    __table_args__ = ( 
+        db.CheckConstraint('loan_date < returned_date', name='check_loan_date_before_returned_date' ),
+        )
 
     def __repr__(self):
         return f'<Loan {self.id}: {self.loan_date}, {self.returned_date}. {self.book_id}, {self.member_id}>'
