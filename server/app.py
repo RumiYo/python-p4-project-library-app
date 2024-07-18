@@ -39,7 +39,7 @@ class Members(Resource):
 
 class MemberById(Resource):
     def get(self,id):
-        member = Member.query.filter(Menber.id==id).first()
+        member = Member.query.filter(Member.id==id).first()
         if not member: 
             return {'error': 'Member not found'}, 404
         return make_response(member.to_dict(), 200)
@@ -70,8 +70,8 @@ class Books(Resource):
         return make_response(books_dict, 200)
 
 class BookById(Resource):
-    class get(self, id):
-        book = Book.query.filter(Bool.id==id).first()
+    def get(self, id):
+        book = Book.query.filter(Book.id==id).first()
         if not book:
             return {'error': 'Book not found'}, 404
         return make_response(book.to_dict(), 202)
@@ -82,13 +82,43 @@ class Loans(Resource):
         loans_dict = [loan.to_dict() for loan in loans]
         return make_response(loans_dict, 200)
 
+    def post(self):
+        json_data = request.get_json()
+        new_record = Loan(
+            loan_date = json_data.get('loan_date'),
+            book_id = json_data.get('book_id'),
+            member_id = json_data.get('member_id'),
+        )
+        db.session.add(new_record)
+        db.session.commit()
+        return make_response(new_record.to_dict(), 201)
 
+class LoanById(Resource):
+    def get(self, id):
+        loan = Loan.query.filter(Loan.id==id).first()
+        if not loan:
+            return {'error': 'Loan not found'}, 404
+        return make_response(loan.to_dict(), 200)
+    
+    def patch(self, id):
+        loan = Loan.query.filter(Loan.id==id).first()
+        if not loan:
+            return {'error': 'Loan not found'}, 404  
+        returned_date = request.get_json().get('returned_date')
+        if loan.loan_date > returned_date:
+            return { "errors": ["validation errors"] }, 400
+        loan.returned_date = returned_date
+        db.session.add(loan)
+        db.session.commit()
+
+        return make_response(loan.to_dict(), 202)
 
 api.add_resource(Members, '/members')
-api.add_resource(MemberByID, '/members/<int:id>')
+api.add_resource(MemberById, '/members/<int:id>')
 api.add_resource(Books, '/books')
-api.add_resource(BookById, '/books/<init:id>')
+api.add_resource(BookById, '/books/<int:id>')
 api.add_resource(Loans, '/loans')
+api.add_resource(LoanById, '/loans/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
