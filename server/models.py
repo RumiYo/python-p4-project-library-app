@@ -50,8 +50,8 @@ class Loan(db.Model, SerializerMixin):
     serialize_rules = ('-book.loans', '-member.books','member.loans')
 
     id = db.Column(db.Integer, primary_key=True)
-    loan_date = db.Column(db.DateTime, server_default=db.func.now())
-    returned_date = db.Column(db.DateTime)
+    loan_date = db.Column(db.Date, server_default=db.func.now())
+    returned_date = db.Column(db.Date)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     member_id = db.Column(db.Integer, db.ForeignKey('members.id'))
     # Add relationships

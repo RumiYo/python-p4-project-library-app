@@ -71,15 +71,15 @@ def create_books():
 def create_loans():
     loans = []
 
-    for _ in range(10):
-        start = datetime.strptime("2023-01-01", "%Y-%m-%d")
-        end = datetime.today() - timedelta(days=30)
+    for _ in range(20):
+        start = datetime.strptime("2022-01-01", "%Y-%m-%d")
+        end = datetime.today() - timedelta(days=40)
         l = Loan(
                 loan_date= datetime.strptime(str(fake.date_between_dates(start, end)), "%Y-%m-%d"),
                 book_id=rc([book.id for book in books]), 
                 member_id = rc([member.id for member in members])
         )
-        random_days = random.randint(7, 40)
+        random_days = random.randint(7, 38)
         l.returned_date = l.loan_date + timedelta(days=random_days)
         loans.append(l)
     return loans
