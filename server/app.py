@@ -23,11 +23,24 @@ class Members(Resource):
         members_dict = [member.to_dict() for member in members]
         return make_response(members_dict, 200)
 
+class MemberById(Resource):
+    def get(self):
+        member = Member.query.filter(Menber.id==id).first()
+        if not member: 
+            return {'error': 'Member not found'}, 404
+
 class Books(Resource):
     def get(self):
         books = Book.query.all()
         books_dict = [book.to_dict() for book in books]
         return make_response(books_dict, 200)
+
+class BookById(Resource):
+    class get(self, id):
+        book = Book.query.filter(Bool.id==id).first()
+        if not book:
+            return {'error': 'Book not found'}, 404
+        return make_response(book.to_dict(), 202)
 
 class Loans(Resource):
     def get(self):  
@@ -38,7 +51,9 @@ class Loans(Resource):
 
 
 api.add_resource(Members, '/members')
+api.add_resource(MemberByID, '/members/<int:id>')
 api.add_resource(Books, '/books')
+api.add_resource(BookById, '/books/<init:id>')
 api.add_resource(Loans, '/loans')
 
 if __name__ == '__main__':
