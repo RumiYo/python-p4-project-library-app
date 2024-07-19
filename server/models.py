@@ -1,6 +1,7 @@
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy_serializer import SerializerMixin
 
 from config import db
 
@@ -41,7 +42,7 @@ class Member(db.Model, SerializerMixin):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     user_id = db.Column(db.String, nullable=False, unique=True)
-    # password = 
+    # _password_hash = db.Column(db.String)
     email = db.Column(db.String, nullable=False)
 
     # Add relationships
@@ -49,11 +50,38 @@ class Member(db.Model, SerializerMixin):
     books = association_proxy('loans', 'book',
                 creator=lambda project_obj: Loan(project=project_obj))
 
+    #email validation
     @validates('email')
     def validate_email(self, key, email):
         if '@' not in email:
              raise ValueError("Email address validation error")
         return email
+
+    #passsword handling
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError('Password hash is not accessible')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8')
+        )
+        self._password_hash = password_hash.decode('utf-8')
+    
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8')
+        )
+
+    def to_dict(self):
+        return{
+            "id": self.id,
+            "first_name": self.first_name, 
+            "last_name": self.last_name,
+            "user_id": self.user_id,
+            "email": self.email 
+        }
 
     def __repr__(self):
         return f'<Member {self.id}: {self.first_name}, {self.last_name}, {self.user_id}, {self.email}>'
