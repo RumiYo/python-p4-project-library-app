@@ -3,6 +3,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import BookIndex from "./pages/BookIndex";
 import UserPage from "./pages/UserPage";
+import BookDetails from "./pages/BookDetails";
 
 
 const routes = [
@@ -18,6 +19,12 @@ const routes = [
             {
                 path: "/books",
                 element: <BookIndex />,
+                children: [
+                    {
+                        path: "/books/:id",
+                        element: <BookDetails />
+                    }
+                ]
             },
             {
                 path: "/account",

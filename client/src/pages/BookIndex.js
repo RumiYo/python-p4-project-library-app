@@ -13,9 +13,11 @@ function BookIndex(){
         .then(setBooks);
     }, [])
 
+
     return (
         <div>
             <h2>Book Index</h2>
+            <Outlet context={{booksList: books}}/>
             <div className="allBooks">
                 {books.map((book) => (
                     <Book bookData={book} />

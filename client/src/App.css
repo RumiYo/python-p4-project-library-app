@@ -15,7 +15,7 @@ main {
   margin: 5%;
 }
 
-/* ShowList */
+/* bookList */
 
 div.bookList {
     background-color: #EDDCD2;
@@ -36,4 +36,35 @@ div.bookList {
     height: 320px;
     align-items: center;
     margin-top: 2px;
+  }
+
+
+/* Overlay BookDetails */
+
+div#bookDetail{
+    position: fixed; /* Set on top of the page content */
+    width: 60%; /* Full width (cover the whole page) */
+    min-height: 60%; /* Full height (cover the whole page) */
+    max-height: 80%;
+    top: 16%;
+    left: 15%;
+    background-color: #96967A;/* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;  /* Add a pointer on hover */
+  
+    color: white;
+    padding: 0% 5% 3% 5%;
+    opacity: 0.95;
+    overflow: auto;
+  }
+  
+  img#bookDetailImage {
+    width: 40%;
+    float: left;
+    margin:0 40px 0 0
+  }
+  
+  #closeDetails {
+    font-size: 110%; 
+    float: right;
   }

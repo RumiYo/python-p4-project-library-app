@@ -12,7 +12,7 @@ function Book({ bookData }){
             <small>Author {bookData.author}</small><br/>
             <small>Year: {bookData.publish_year}</small><br/>
             <small>
-             {/* <Link to={`/books/${bookData.id}`}>View details</Link>  */}
+             <Link to={`/books/${bookData.id}`}>View details</Link> 
             </small> 
         </div>
     )
