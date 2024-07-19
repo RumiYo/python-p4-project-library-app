@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from  "react-router-dom";
 import { Outlet, useOutletContext } from "react-router-dom";
+import Book from "../components/Book"
 
 function BookIndex(){
 
@@ -15,15 +16,11 @@ function BookIndex(){
     return (
         <div>
             <h2>Book Index</h2>
-            <ul>
+            <div className="allBooks">
                 {books.map((book) => (
-                <li key={book.id}>
-                    <span>
-                    {book.title} | Author: {book.author}
-                    </span>
-                </li>
+                    <Book bookData={book} />
                 ))}
-      </ul>
+            </div>
         </div>
         
     )

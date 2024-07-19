@@ -14,3 +14,26 @@ body {
 main {
   margin: 5%;
 }
+
+/* ShowList */
+
+div.bookList {
+    background-color: #EDDCD2;
+    align-items: center;
+    margin:5px;
+    margin:4px;
+    text-align: center;
+    display: block;
+    float: left;
+    padding: 5px;
+    width: 25%;
+    min-width: 110px;
+    height:480px;
+    overflow: auto;
+  }
+  img.bookListImage {
+    width: 90%;
+    height: 320px;
+    align-items: center;
+    margin-top: 2px;
+  }
