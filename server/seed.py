@@ -23,6 +23,7 @@ def create_members():
             email = fake.email()         
         )
         m.user_id = f"{m.first_name}{random.randint(10,100)}"
+        m.password_hash = fake.password(length=8, special_chars=True, digits=True, upper_case=True, lower_case=True)
         members.append(m)
     return members
 

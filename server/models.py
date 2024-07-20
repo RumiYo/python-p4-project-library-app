@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 
-from config import db
+from config import db, bcrypt
 
 # Models go here!
 class Book(db.Model, SerializerMixin):
@@ -42,7 +42,7 @@ class Member(db.Model, SerializerMixin):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     user_id = db.Column(db.String, nullable=False, unique=True)
-    # _password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String)
     email = db.Column(db.String, nullable=False)
 
     # Add relationships
