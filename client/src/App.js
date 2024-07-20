@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import "./App.css";
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 
 function App() {
@@ -21,14 +22,16 @@ function App() {
   };
 
   if (!member)
-    return <Home onLogin={handleLogin}  />
+    return <Login onLogin={handleLogin}  />
   
   return (
     <>
       <header>
         <NavBar  member={member} onLogout={handleLogin}  />
       </header>
-        <Outlet />
+        <body>
+          <Outlet member={member} />
+        </body>
     </>
 );
 }
