@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react";
-import { Link } from  "react-router-dom";
+import { Link, useOutletContext  } from  "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import SignUpForm from "../components/SignUpForm";
 
-function Home(){
+function Home({ onLogin }){
+    const [ showLogin, setShowLogin ] =useState(true);
 
-
-    return (
-        <main>
-            <h2>Home</h2>
-            <p>Login Page Here</p>
-            <LoginForm />
-            <SignUpForm />
-        </main>
-        
-    )
-
+        return (
+            <main>
+                <h2>Home</h2>
+                {showLogin ? (
+                    <>
+                    <LoginForm onLogin={ onLogin } />
+                    <p>Don't have an account?</p>
+                    <button onClick={() => setShowLogin(false)}>
+                          Go to Signup page
+                    </button>
+                    </>
+                ) : (
+                    <>
+                        <SignUpForm onLogin={ onLogin } />
+                        <p>Already have an account? </p>
+                        <button onClick={() => setShowLogin(true)}>
+                            Go to Login page
+                        </button>
+                    </>
+                )}
+                <p>Librrary info</p>
+            </main>
+        )
 }
 
 export default Home;

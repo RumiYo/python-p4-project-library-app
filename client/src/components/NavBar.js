@@ -2,7 +2,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
-function NavBar(){
+function NavBar({ member, onLogout }){
+
+    function handleLogoutClick() {
+        fetch("/logout", { method: "DELETE" }).then((r) => {
+          if (r.ok) {
+            onLogout(null);
+          }
+        });
+      }
+
     return (
         <nav>
             <NavLink
@@ -19,6 +28,10 @@ function NavBar(){
                 to="/account"
                 className="nav-link"
             >Account Summary</NavLink>
+            <NavLink
+                className="nav-link"
+                onClick={handleLogoutClick}
+            >Logout</NavLink>
         </nav>
     )
 }

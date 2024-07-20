@@ -1,4 +1,5 @@
 import { useParams, Outlet, useOutletContext  } from "react-router-dom";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function BookDetails(){
@@ -19,6 +20,8 @@ function BookDetails(){
              <p><b>Publish year: </b>{book.publish_year}</p>
              <h4>Summary</h4>
              <p>{book.summary}</p>
+             <input type="submit" id="loan" value="Loan this book" />
+             <input type="submit" id="return" value="Return this book" />
              <Link id="closeDetails" to={`/books`}>Close details</Link> 
         </div>
     )
