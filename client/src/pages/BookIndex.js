@@ -5,6 +5,7 @@ import Book from "../components/Book"
 function BookIndex(){
 
     const [books, setBooks] = useState([]);
+    const { member } = useOutletContext();
 
     useEffect(()=>{
         fetch('/books')
@@ -14,15 +15,15 @@ function BookIndex(){
 
 
     return (
-        <div>
+        <body>
             <h2>Book Index</h2>
-            <Outlet context={{booksList: books}}/>
+            <Outlet context={{booksList: books, member:member }}/>
             <div className="allBooks">
                 {books.map((book) => (
                     <Book bookData={book} key={book}/>
                 ))}
             </div>
-        </div>
+        </body>
         
     )
 

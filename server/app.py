@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import make_response, request, session
 from flask_restful import Resource
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -133,7 +134,7 @@ class Loans(Resource):
     def post(self):
         json_data = request.get_json()
         new_record = Loan(
-            loan_date = json_data.get('loan_date'),
+            loan_date = datetime.now().date(),
             book_id = json_data.get('book_id'),
             member_id = json_data.get('member_id'),
         )

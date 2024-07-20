@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import "./App.css";
 import Login from "./pages/Login";
 
+
 function App() {
   const [ member, setMember ] = useState(null);
 
@@ -28,9 +29,7 @@ function App() {
       <header>
         <NavBar  member={member} onLogout={handleLogin}  />
       </header>
-        <body>
-         <Outlet member={member} />
-        </body>
+         <Outlet context={{member: member}} />
     </>
 );
 }

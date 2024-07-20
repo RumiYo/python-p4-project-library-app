@@ -5,9 +5,9 @@ function UserPage(){
 
 
     return (
-        <div>
+        <body>
             <h2>User Page</h2>
-        </div>
+        </body>
         
     )
 
