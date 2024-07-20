@@ -8,7 +8,7 @@ function Home({ onLogin }){
 
         return (
             <main>
-                <h2>Home</h2>
+                <h1>Rumi Online Library</h1>
                 {showLogin ? (
                     <>
                     <LoginForm onLogin={ onLogin } />
@@ -19,7 +19,7 @@ function Home({ onLogin }){
                     </>
                 ) : (
                     <>
-                        <SignUpForm onLogin={ onLogin } />
+                        <SignUpForm onSignUp={ onLogin } />
                         <p>Already have an account? </p>
                         <button onClick={() => setShowLogin(true)}>
                             Go to Login page

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function LoginForm({ onLogin }){
     const [ user_id, setUser_id ] = useState("");
     const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState([]);
+    const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     function handleSubmit(e){
@@ -24,41 +24,44 @@ function LoginForm({ onLogin }){
                 .then((member)=> onLogin(member))
             } else {
                 r.json()
-                .then((err) => setErrors(err.errors))
+                .then((err) => setError(err.error))
             }
         })
     }
+    
+    console.log(error)
         
     return (
-        <form onSubmit={handleSubmit}>
+        <>
+            <h2>Login</h2>
+            <p>Type your UserID and Password:</p>
+            <form onSubmit={handleSubmit}>
 
-          <label htmlFor="user_id">UserID</label>
-          <input
-            type="text"
-            id="user_id"
-            autoComplete="off"
-            value={user_id}
-            onChange={(e) => setUser_id(e.target.value)}
-          />
+            <label htmlFor="user_id">UserID</label>
+            <input
+                type="text"
+                id="user_id"
+                autoComplete="off"
+                value={user_id}
+                onChange={(e) => setUser_id(e.target.value)}
+            />
+            <br/>
+            <label htmlFor="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <br/>
+            <input type="submit" />
+            {isLoading ? "Loading..." : ""}          
 
+           <p>{error}</p>
 
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <input type="submit" />
-          {isLoading ? "Loading..." : ""}          
-
-          {errors.map((err) => (
-            <p>{err}</p>
-          ))}
-
-      </form>
+        </form>
+        </>
     )
 }
 
