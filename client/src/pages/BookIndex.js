@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from  "react-router-dom";
 import { Outlet, useOutletContext } from "react-router-dom";
 import Book from "../components/Book"
 
@@ -20,7 +19,7 @@ function BookIndex(){
             <Outlet context={{booksList: books}}/>
             <div className="allBooks">
                 {books.map((book) => (
-                    <Book bookData={book} key={book} />
+                    <Book bookData={book} key={book}/>
                 ))}
             </div>
         </div>

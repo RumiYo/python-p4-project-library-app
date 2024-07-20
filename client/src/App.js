@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import "./App.css";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
 
 function App() {
   const [ member, setMember ] = useState(null);
@@ -30,7 +29,7 @@ function App() {
         <NavBar  member={member} onLogout={handleLogin}  />
       </header>
         <body>
-          <Outlet member={member} />
+         <Outlet member={member} />
         </body>
     </>
 );
