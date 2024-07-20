@@ -14,6 +14,7 @@ from sqlalchemy import MetaData
 
 # Instantiate app, set attributes
 app = Flask(__name__)
+app.secret_key = b'D\xce\xd7\x0e\x97D\x95u\xd6hh\xad\x90\xd4\xfb\x00'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
