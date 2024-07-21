@@ -153,7 +153,7 @@ class LoanById(Resource):
         loan = Loan.query.filter(Loan.id==id).first()
         if not loan:
             return {'error': 'Loan not found'}, 404  
-        returned_date = request.get_json().get('returned_date')
+        returned_date = datetime.now().date()
         if loan.loan_date > returned_date:
             return { "errors": ["validation errors"] }, 400
         loan.returned_date = returned_date

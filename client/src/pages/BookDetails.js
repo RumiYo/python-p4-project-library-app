@@ -6,9 +6,10 @@ function BookDetails(){
 
     const params = useParams();
     const { member } = useOutletContext();
-    const [error, setError] = useState([])
+    const [ error, setError] = useState([])
     const [ loaned, setLoaned ] = useState(false)
     const [ book, setBook ] = useState(null)   
+    const [ loan, setLoan ] = useState(null)
 
     useEffect(() => {
         fetch(`/books/${parseInt(params.id)}`)
@@ -24,6 +25,7 @@ function BookDetails(){
             for (let loan of book.loans) {
                 if (loan.member.id === member.id && loan.returned_date === null) {
                     setLoaned(true);
+                    setLoan(loan);
                     break;
                 }
             }
@@ -32,8 +34,6 @@ function BookDetails(){
 
     function handleSubmitLoan(e){
         e.preventDefault();
-        const currentDate = new Date();
-        console.log("loan", member.id, member.user_id, book.id, book.title, currentDate)
         const formData = {
             book_id: book.id,
             member_id: member.id
@@ -54,6 +54,7 @@ function BookDetails(){
               .then((loan) => {
                 console.log(loan);
                 setLoaned(true);
+                setLoan(loan)
               });
              } else {
                 r.json().then((err) => setError(err.error));
@@ -65,7 +66,28 @@ function BookDetails(){
 
     function handleSubmitReturn(e){
         e.preventDefault();
-        console.log("return")
+        console.log("return", member.id, member.user_id, book.id, book.title)
+        console.log(loan)
+        fetch(`/loans/${loan.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+          }).then((r) => {
+            if (r.ok) {
+              r.json()
+              .then((loan) => {
+                console.log(loan);
+                setLoaned(false);
+              });
+             } else {
+                r.json().then((err) => setError(err.error));
+             }
+          }).catch((error) => {
+            console.error('Error:', error);
+        });
+
     }
 
     if (!book) {
@@ -87,7 +109,7 @@ function BookDetails(){
                   <input type="submit" id="loan" value={loaned ? "Loaned" :  "Loan this book"} disabled={loaned} />
                 </form>
                 <form onSubmit={handleSubmitReturn}>
-                    <input type="submit" id="return" value="Return this book" />
+                    <input type="submit" id="return" value="Return this book" disabled={!loaned} />
                  </form>
              <Link id="closeDetails" to={`/books`}>Close details</Link> 
         </div>
