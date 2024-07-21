@@ -20,20 +20,19 @@ main {
 div.bookList {
     background-color: #EDDCD2;
     align-items: center;
-    margin:5px;
     margin:4px;
     text-align: center;
     display: block;
     float: left;
-    padding: 5px;
-    width: 25%;
+    padding: 15px 0.5% 5px 0.5%;
+    width: 22%;
     min-width: 110px;
-    height:480px;
+    height:580px;
     overflow: auto;
   }
   img.bookListImage {
-    width: 90%;
-    height: 320px;
+    max-width: 90%;
+    max-height: 75%;    
     align-items: center;
     margin-top: 2px;
   }
