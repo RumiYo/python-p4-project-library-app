@@ -1,14 +1,34 @@
 import { useParams, Outlet, useOutletContext  } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function BookDetails(){
 
     const params = useParams();
-    const { booksList, member } = useOutletContext();
-    const [errors, setErrors] = useState([]);
+    const { member } = useOutletContext();
+    const [error, setError] = useState([])
+    const [ loaned, setLoaned ] = useState(false)
+    const [ book, setBook ] = useState(null)   
 
-    const book = booksList.find(item => item.id === parseInt(params.id))
+    useEffect(() => {
+        fetch(`/books/${parseInt(params.id)}`)
+        .then((r)=> {
+          if(r.ok){
+            r.json().then((book) => setBook(book))
+          }
+        })
+      }, [params.id]);
+
+      useEffect(() => {
+        if (book) {
+            for (let loan of book.loans) {
+                if (loan.member.id === member.id && loan.returned_date === null) {
+                    setLoaned(true);
+                    break;
+                }
+            }
+        }
+    }, [book, member.id]);
 
     function handleSubmitLoan(e){
         e.preventDefault();
@@ -19,6 +39,9 @@ function BookDetails(){
             member_id: member.id
         }
         console.log(formData)
+        console.log(member)
+        console.log(book.loans)
+        console.log(book.loans[0].member.id)
         fetch("/loans", {
             method: "POST",
             headers: {
@@ -29,13 +52,15 @@ function BookDetails(){
             if (r.ok) {
               r.json()
               .then((loan) => {
-                console.log(loan)
+                console.log(loan);
+                setLoaned(true);
               });
              } else {
-            //    r.json().then((err) => setErrors(err.errors));
-                console.log('no_data')
+                r.json().then((err) => setError(err.error));
              }
-          });
+          }).catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     function handleSubmitReturn(e){
@@ -59,7 +84,7 @@ function BookDetails(){
                 <h4>Summary</h4>
                 <p>{book.summary}</p>
                 <form onSubmit={handleSubmitLoan}>
-                  <input type="submit" id="loan" value="Loan this book" />
+                  <input type="submit" id="loan" value={loaned ? "Loaned" :  "Loan this book"} disabled={loaned} />
                 </form>
                 <form onSubmit={handleSubmitReturn}>
                     <input type="submit" id="return" value="Return this book" />
