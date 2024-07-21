@@ -74,14 +74,15 @@ class Member(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8')
         )
 
-    def to_dict(self):
-        return{
-            "id": self.id,
-            "first_name": self.first_name, 
-            "last_name": self.last_name,
-            "user_id": self.user_id,
-            "email": self.email 
-        }
+    # def to_dict(self):
+    #     return{
+    #         "id": self.id,
+    #         "first_name": self.first_name, 
+    #         "last_name": self.last_name,
+    #         "user_id": self.user_id,
+    #         "email": self.email,
+
+    #     }
 
     def __repr__(self):
         return f'<Member {self.id}: {self.first_name}, {self.last_name}, {self.user_id}, {self.email}>'

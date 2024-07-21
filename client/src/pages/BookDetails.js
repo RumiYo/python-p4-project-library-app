@@ -38,10 +38,6 @@ function BookDetails(){
             book_id: book.id,
             member_id: member.id
         }
-        console.log(formData)
-        console.log(member)
-        console.log(book.loans)
-        console.log(book.loans[0].member.id)
         fetch("/loans", {
             method: "POST",
             headers: {
@@ -66,8 +62,6 @@ function BookDetails(){
 
     function handleSubmitReturn(e){
         e.preventDefault();
-        console.log("return", member.id, member.user_id, book.id, book.title)
-        console.log(loan)
         fetch(`/loans/${loan.id}`, {
             method: "PATCH",
             headers: {
@@ -78,8 +72,8 @@ function BookDetails(){
             if (r.ok) {
               r.json()
               .then((loan) => {
-                console.log(loan);
                 setLoaned(false);
+                setLoan(null)
               });
              } else {
                 r.json().then((err) => setError(err.error));

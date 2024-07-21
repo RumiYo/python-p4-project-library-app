@@ -5,9 +5,9 @@ function ErrorPage(){
     const error = useRouteError();
 
     return (
-        <main>
+        <div>
             <h1>Woops! Something went wrong!</h1>
-        </main>
+        </div>
     )
 }
 

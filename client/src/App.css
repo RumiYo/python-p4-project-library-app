@@ -15,6 +15,16 @@ main {
   margin: 5%;
 }
 
+/* home */
+
+.home {
+    width: 80%;
+    margin: 10%;
+    align-items: center;  
+    text-align: center; 
+}
+
+
 /* bookList */
 
 div.bookList {
@@ -66,4 +76,15 @@ div#bookDetail{
   #closeDetails {
     font-size: 110%; 
     float: right;
+  }
+
+
+
+  td, th {
+    padding: 10px;
+    text-align: left;
+  }
+
+  thead {
+    background-color: #EDDCD2;
   }

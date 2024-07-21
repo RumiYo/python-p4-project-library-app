@@ -15,7 +15,7 @@ function BookIndex(){
 
 
     return (
-        <body>
+        <div>
             <h2>Book Index</h2>
             <Outlet context={{booksList: books, member:member }}/>
             <div className="allBooks">
@@ -23,7 +23,7 @@ function BookIndex(){
                     <Book bookData={book} key={book}/>
                 ))}
             </div>
-        </body>
+        </div>
         
     )
 
