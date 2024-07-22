@@ -29,7 +29,9 @@ For this project, you must:
 
 ## My Full-Stack application
 This online library application allowed users to browse books and to loan/return books after the login. The whole loaned histories and user information change is available on Account Summary page too.
-![App_video](https://youtu.be/y_ZHk9JSTLk)
+
+[![Watch the video](https://img.youtube.com/vi/y_ZHk9JSTLk/0.jpg)](https://youtu.be/y_ZHk9JSTLk)
+
 
 
 #### Backend:
