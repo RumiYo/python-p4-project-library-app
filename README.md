@@ -5,7 +5,7 @@ Flatiron Softwear engineer course phase 4 project
 * [Phase 4 project requirement](#phase-4-project-requirements)
 * [My Full-Stack application](#my-full-stack-application)
 * [Technologies](#technologies)
-* [API](#api-data-source)
+* [Resources](#resources)
 
 
 ## Phase 4 project requirements
@@ -224,7 +224,7 @@ export default SignUpForm;
 - [Faker 26.0.0 documentation: date_time](https://faker.readthedocs.io/en/master/providers/faker.providers.date_time.html)
 - [Python Formik Validation](https://github.com/learn-co-curriculum/python-formik-validation)
 - [python-p4-iam-putting-it-all-together-lab](https://github.com/RumiYo/python-p4-iam-putting-it-all-together-lab/tree/main/client/src/components)
-- [Colors.co:pallete](https://coolors.co/palette/cb997e-eddcd2-fff1e6-f0efeb-ddbea9-a5a58d-b7b7a4
+- [Coolors](https://coolors.co/palette/cb997e-eddcd2-fff1e6-f0efeb-ddbea9-a5a58d-b7b7a4
 
 )
 
