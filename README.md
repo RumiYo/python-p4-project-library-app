@@ -35,7 +35,7 @@ This online library application allowed users to browse books and to loan/return
 - SQLAlchemy for database management
 - Serialization and validation
 
-# Frontend:
+#### Frontend:
 - React for building the user interface
 - Sending HTTP requests with fetch to the API
 - React Router for navigation
