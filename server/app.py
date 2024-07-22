@@ -23,20 +23,23 @@ class Signups(Resource):
     def post(self):
         json_data = request.get_json()
         if not json_data.get('user_id') or not json_data.get('first_name') or not json_data.get('last_name')or not json_data.get('email'):
-            return {"message": "All input fields cannot be empty"}, 422 
+            return {"error": "All input fields cannot be empty"}, 422 
         duplicate_name_member = Member.query.filter(Member.user_id==json_data['user_id']).first()
         if duplicate_name_member:
-            return {"message": "This user_id already exists. Try with a new user id"}, 422
+            return {"error": "This user_id already exists. Try with a new user id"}, 422
         new_record = Member(
             first_name=json_data.get('first_name'),
             last_name=json_data.get('last_name'),
             user_id=json_data.get('user_id'),
             email=json_data.get('email'),
         )
-        new_record.password_hash = json_data.get('password')
+        new_record.password_hash = json_data.get('password_hash')
         db.session.add(new_record)
         db.session.commit()
+        print(new_record.to_dict())
 
+        if not new_record.id:
+            return {'error': 'validation errors'}, 400
         session['user_id'] = new_record.id
         return make_response(new_record.to_dict(), 201)
 

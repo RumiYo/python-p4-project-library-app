@@ -43,7 +43,7 @@ class Member(db.Model, SerializerMixin):
     last_name = db.Column(db.String, nullable=False)
     user_id = db.Column(db.String, nullable=False, unique=True)
     email = db.Column(db.String, nullable=False)
-    _password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String, nullable=False)
 
     # Add relationships
     loans = db.relationship('Loan', back_populates='member')
@@ -64,6 +64,8 @@ class Member(db.Model, SerializerMixin):
 
     @password_hash.setter
     def password_hash(self, password):
+        if password is None:
+            raise ValueError("Password cannot be None")
         password_hash = bcrypt.generate_password_hash(
             password.encode('utf-8')
         )
