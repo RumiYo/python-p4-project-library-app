@@ -49,7 +49,7 @@ class CheckSession(Resource):
         if member:
             return member.to_dict()
         else:
-            return {'mesage': '401: Not Authorized'}, 401     
+            return {'error': '401: Not Authorized'}, 401     
 
 class Login(Resource):
     def post(self):
@@ -165,7 +165,7 @@ class LoanById(Resource):
             return {'error': 'Loan not found'}, 404  
         returned_date = datetime.now().date()
         if loan.loan_date > returned_date:
-            return { "errors": ["validation errors"] }, 400
+            return { "error": "validation errors" }, 400
         loan.returned_date = returned_date
         db.session.add(loan)
         db.session.commit()
