@@ -78,13 +78,28 @@ div#bookDetail{
     float: right;
   }
 
+/* User Page */
+    /* loaned and returned book */
+    td, th {
+        padding: 10px;
+        text-align: left;
+    }
+    thead {
+        background-color: #EDDCD2;
+     }
+    tbody {
+        background-color: #FFF1E6;
+    }
+    table#accountBooksList{
+        margin: 10px 20px;  
+    }
 
-
-  td, th {
-    padding: 10px;
-    text-align: left;
-  }
-
-  thead {
-    background-color: #EDDCD2;
-  }
+    div#accountDetail{
+        margin: 10px 20px;  
+    }
+    div#memberEdit{
+        margin: 20px 10px 50px 10px;
+        padding: 5px;
+        position: float;
+        background-color: #FFF1E6;
+    }

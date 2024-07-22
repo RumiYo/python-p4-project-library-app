@@ -20,7 +20,7 @@ function BookIndex(){
             <Outlet context={{booksList: books, member:member }}/>
             <div className="allBooks">
                 {books.map((book) => (
-                    <Book bookData={book} key={book}/>
+                    <Book bookData={book} key={book.id}/>
                 ))}
             </div>
         </div>

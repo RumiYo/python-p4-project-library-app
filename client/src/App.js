@@ -29,7 +29,7 @@ function App() {
       <header>
         <NavBar  member={member} onLogout={handleLogin}  />
       </header>
-         <Outlet context={{member: member}} />
+         <Outlet context={{member: member, updateMember:handleLogin }} />
     </>
 );
 }

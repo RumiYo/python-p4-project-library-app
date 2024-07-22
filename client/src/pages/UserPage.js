@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useOutletContext  } from "react-router-dom";
+import { useOutletContext, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UserPage(){
 
-    const { member } = useOutletContext(); 
+    const { member, updateMember } = useOutletContext(); 
     const [ loans, setLoans ] =useState([]);
 
     useEffect(() => {
@@ -27,32 +28,37 @@ function UserPage(){
     }
 
     return (
-        <body>
+        <div>
             <h2>Account Summary</h2>
             <hr />
             <h3>Loaned or Returned Books</h3>    
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Book Title</th>
-                    <th>Book Author</th>
-                    <th>Loaned Date</th>
-                    <th>Returned Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {bookslist}
-            </tbody>
+            <table id="accountBooksList">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Book Title</th>
+                        <th>Book Author</th>
+                        <th>Loaned Date</th>
+                        <th>Returned Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bookslist}
+                </tbody>
+            </table>
             <br />
             <hr />
             <h3>Account Information</h3>
-            <p>UserID: {member.user_id}</p>
-            <p>First Name: {member.first_name}</p>
-            <p>Last Name: {member.last_name}</p>
-            <p>Email Address: {member.email}</p>
-            <p>Password: ●●●●●●●●●</p>
-
-        </body>
+            <div id="accountDetail">
+                <p>UserID:  {member.user_id}</p>
+                <p>First Name:  {member.first_name}</p>
+                <p>Last Name:  {member.last_name}</p>
+                <p>Email Address:  {member.email}</p>
+                <p>Password:  ●●●●●●●●●</p>
+                <Link to={`/account/edit`} >Update your account information</Link> 
+                <Outlet  context={{member: member, updateMember:updateMember}} />
+            </div>
+        </div>
         
     )
 

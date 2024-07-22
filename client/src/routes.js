@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import BookIndex from "./pages/BookIndex";
 import UserPage from "./pages/UserPage";
 import BookDetails from "./pages/BookDetails";
+import AccountEdit from "./components/AccountEdit";
 
 
 const routes = [
@@ -28,7 +29,13 @@ const routes = [
             },
             {
                 path: "/account",
-                element: <UserPage />
+                element: <UserPage />,
+                children: [
+                    {
+                        path: "/account/edit",
+                        element: <AccountEdit />
+                    }
+                ]
             }
         ]
     }

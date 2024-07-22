@@ -97,14 +97,21 @@ class MemberById(Resource):
         member = Member.query.filter(Member.id==id).first()
         if not member: 
             return {'error': 'Member not found'}, 404
+
         json_data = request.get_json()
-        if "@" not in json_data.get('email'):
-            return {'error': ['validation errors']}, 400
-        if 'email' in json_data:
-            member.email = json_data.get('email')
+
+        if 'email' in json_data and "@" not in json_data.get('email'):
+            return {'error': 'validation errors'}, 400
+
+        for key, value in json_data.items():
+            if hasattr(member, key):
+                setattr(member, key, value)
+            else:
+                return {'error': f'Invalid field: {key}'}, 400
         
         db.session.add(member)
         db.session.commit()
+        return make_response(member.to_dict(), 201)
 
     def delete(self,id):
         member = Member.query.filter(Member.id==id).first()
