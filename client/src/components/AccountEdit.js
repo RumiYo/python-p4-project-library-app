@@ -48,7 +48,6 @@ function AccountEdit() {
                     <option value="first_name">First Name</option>
                     <option value="last_name">Last Name</option>
                     <option value="email">Email Address</option>
-                    <option value="password">Password</option>
                 </select>
                 <form onSubmit={handleSubmit}>
                 <input
