@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 function BookDetails(){
 
     const params = useParams();
-    const { member } = useOutletContext();
+    const { member, updateMember } = useOutletContext();
     const [ error, setError] = useState([])
     const [ loaned, setLoaned ] = useState(false)
     const [ book, setBook ] = useState(null)   
@@ -49,7 +49,7 @@ function BookDetails(){
               .then((loan) => {
                 console.log(loan);
                 setLoaned(true);
-                setLoan(loan)
+                setLoan(loan);
               });
              } else {
                 r.json().then((err) => setError(err.error));

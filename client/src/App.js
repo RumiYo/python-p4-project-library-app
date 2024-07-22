@@ -21,13 +21,17 @@ function App() {
     setMember(member); 
   };
 
+  const handleLogOut = () => {
+    setMember(null); 
+  };
+
   if (!member)
     return <Login onLogin={handleLogin}  />
   
   return (
     <>
       <header>
-        <NavBar  member={member} onLogout={handleLogin}  />
+        <NavBar  member={member} onLogout={handleLogOut}  />
       </header>
          <Outlet context={{member: member, updateMember:handleLogin }} />
     </>

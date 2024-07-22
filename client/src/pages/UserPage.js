@@ -8,9 +8,16 @@ function UserPage(){
     const [ loans, setLoans ] =useState([]);
 
     useEffect(() => {
-        if (member) {
-            setLoans(member.loans)
-    }}, [loans, member.id]);
+        fetch(`/members/${member.id}`)
+        .then((r)=> {
+          if(r.ok){
+            r.json().then((member) => {
+                updateMember(member)
+                setLoans(member.loans)
+          })
+          }
+        })
+      }, []);
 
     const bookslist = loans.map(loan =>
         (
@@ -23,7 +30,7 @@ function UserPage(){
         </tr>
         ))
 
-    if (!loans.length) {
+    if (!member) {
         return <div>Loading...</div>;
     }
 
