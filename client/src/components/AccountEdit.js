@@ -1,13 +1,12 @@
-import { Link, useParams, useOutletContext } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+import { useState } from "react";
 
 function AccountEdit() {
-    const params = useParams();
+    
     const { member, updateMember } = useOutletContext(); 
 
     const [ keyValue, setKeyValue ] = useState("user_id")
-    const [ inputValue, setInputValue ] = useState("")
-    const [ memberInfo, setMemberInfo ] = useState(member)  
+    const [ inputValue, setInputValue ] = useState("") 
     const [ message , setMessage] = useState("")  
 
     function handleSubmit(e){

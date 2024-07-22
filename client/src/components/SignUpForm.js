@@ -96,6 +96,7 @@ function SignUpForm({ onSignUp }){
                 />
                 <br/>
                 <input type="submit" className="buttons"/>
+                {isLoading ? "Loading..." : ""}    
 
                 <p>{error}</p>
             </form>            

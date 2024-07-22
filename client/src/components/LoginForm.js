@@ -34,7 +34,6 @@ function LoginForm({ onLogin }){
     return (
         <div >
             <h2>Login</h2>
-
             <form className="LoginSignupForms" onSubmit={handleSubmit}>
                 <p>Type your UserID and Password:</p>
                 <label htmlFor="user_id">UserID: </label>

@@ -1,11 +1,11 @@
-import { useParams, Outlet, useOutletContext, Link  } from "react-router-dom";
+import { useParams, useOutletContext, Link  } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function BookDetails(){
 
     const params = useParams();
-    const { member, updateMember } = useOutletContext();
-    const [ error, setError] = useState([])
+    const { member } = useOutletContext();
+    const [ error, setError] = useState("")
     const [ loaned, setLoaned ] = useState(false)
     const [ book, setBook ] = useState(null)   
     const [ loan, setLoan ] = useState(null)
