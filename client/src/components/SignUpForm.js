@@ -3,11 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 
 function SignUpForm({ onSignUp }){
-    // const [first_name, setFirstName] = useState("");
-    // const [last_name, setLastName] = useState("");
-    // const [userId, setUserId] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
+
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +26,7 @@ function SignUpForm({ onSignUp }){
       },
       validationSchema: formSchema,
       onSubmit: (values) => {
-        console.log(values)
+        setIsLoading(true);
         fetch("/signup", {
             method: "POST",
             headers: {
@@ -49,37 +45,8 @@ function SignUpForm({ onSignUp }){
       }
     })
 
-    // function handleSubmit(e){
-    //     e.preventDefault();
-    //     console.log(lastName, firstName,userId, email, password)
-    //     setIsLoading(true);
-    //     fetch("/signup", {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //           first_name: firstName,
-    //           last_name: lastName,
-    //           user_id: userId,
-    //           email: email,
-    //           password_hash: password,
-    //         }),
-    //       })
-    //     .then((r) => {
-    //         setIsLoading(false);
-    //         if (r.ok) {
-    //           r.json().then((member) => onSignUp(member));
-    //         } else {
-    //           r.json().then((err) => setError(err.error));
-    //         }
-    //     });
-    // }
-      
-    
-
     return (
-        <>
+        <div>
             <h2>Signup Form</h2>
             <form className="LoginSignupForms" onSubmit={formik.handleSubmit}>
               <p>Please fill out all the information below:</p>
@@ -132,7 +99,7 @@ function SignUpForm({ onSignUp }){
 
                 <p>{error}</p>
             </form>            
-        </>
+        </div>
     )
 }
 
