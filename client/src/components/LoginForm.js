@@ -32,36 +32,36 @@ function LoginForm({ onLogin }){
     console.log(error)
         
     return (
-        <>
+        <div >
             <h2>Login</h2>
-            <p>Type your UserID and Password:</p>
-            <form onSubmit={handleSubmit}>
 
-            <label htmlFor="user_id">UserID</label>
-            <input
-                type="text"
-                id="user_id"
-                autoComplete="off"
-                value={user_id}
-                onChange={(e) => setUser_id(e.target.value)}
-            />
-            <br/>
-            <label htmlFor="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <br/>
-            <input type="submit" />
-            {isLoading ? "Loading..." : ""}          
+            <form className="LoginSignupForms" onSubmit={handleSubmit}>
+                <p>Type your UserID and Password:</p>
+                <label htmlFor="user_id">UserID: </label>
+                <input
+                    type="text"
+                    id="user_id"
+                    autoComplete="off"
+                    value={user_id}
+                    onChange={(e) => setUser_id(e.target.value)}
+                />
 
-           <p>{error}</p>
+                <label htmlFor="password">   Password: </label>
+                <input
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <br/>
+                <input type="submit" className="buttons"/>
+                {isLoading ? "Loading..." : ""}          
 
-        </form>
-        </>
+                <p>{error}</p>
+
+            </form>
+        </div>
     )
 }
 

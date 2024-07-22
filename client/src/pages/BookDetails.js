@@ -99,10 +99,10 @@ function BookDetails(){
                 <h4>Summary</h4>
                 <p>{book.summary}</p>
                 <form onSubmit={handleSubmitLoan}>
-                  <input type="submit" id="loan" value={loaned ? "Loaned" :  "Loan this book"} disabled={loaned} />
+                  <input type="submit" className="buttons" id="loan" value={loaned ? "Loaned" :  "Loan this book"} disabled={loaned} />
                 </form>
                 <form onSubmit={handleSubmitReturn}>
-                    <input type="submit" id="return" value="Return this book" disabled={!loaned} />
+                    <input type="submit"className="buttons" id="return" value="Return this book" disabled={!loaned} />
                  </form>
              <Link id="closeDetails" to={`/books`}>Close details</Link> 
         </div>

@@ -56,7 +56,7 @@ function AccountEdit() {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                     />
-                    <input type="submit" />
+                    <input type="submit" className="buttons"/>
                 </form>
                 <p>{message}</p>
             </div>

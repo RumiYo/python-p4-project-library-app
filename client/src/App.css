@@ -19,11 +19,44 @@ main {
 
 .home {
     width: 80%;
-    margin: 10%;
+    margin: 5% 10%;
     align-items: center;  
     text-align: center; 
 }
+#login {
+    width: 80%;
+    margin: 5% 10%;
+    align-items: center;  
+    text-align: center; 
+}
+.LoginSignupForms{
+    background-color: #EDDCD2;
+    padding: 5px;
+}
 
+.buttons {
+        background-color: #CB997E; /* Green background */
+        border: none; /* Remove borders */
+        color: white; /* White text */
+        padding: 10px 20px; /* Some padding */
+        text-align: center; /* Center text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block; /* Inline block display */
+        font-size: 16px; /* Text size */
+        margin: 4px 2px; /* Margins */
+        cursor: pointer; /* Pointer cursor on hover */
+        border-radius: 4px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+    
+    .buttons:hover {
+        background-color: #985D3D;
+    }
+
+    .buttons:disabled {
+        background-color: #A6A6A6;
+        color: #EDDCD2; 
+    }
 
 /* bookList */
 

@@ -41,8 +41,9 @@ function SignUpForm({ onSignUp }){
     return (
         <>
             <h2>Signup Form</h2>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="firstName">First Name</label>
+            <form className="LoginSignupForms" onSubmit={handleSubmit}>
+              <p>Please fill out all the information below:</p>
+                <label htmlFor="firstName">First Name:  </label>
                 <input
                 type="text"
                 id="firstName"
@@ -51,7 +52,7 @@ function SignUpForm({ onSignUp }){
                 onChange={(e) => setFirstName(e.target.value)}
                 />
                 <br/>
-                <label htmlFor="lastName">Last Name</label>
+                <label htmlFor="lastName">  Last Name:  </label>
                 <input
                 type="text"
                 id="lastName"
@@ -60,7 +61,7 @@ function SignUpForm({ onSignUp }){
                 onChange={(e) => setLastName(e.target.value)}
                 />
                 <br/>
-                <label htmlFor="userId">UserID</label>
+                <label htmlFor="userId">UserID:  </label>
                 <input
                 type="text"
                 id="userId"
@@ -69,7 +70,7 @@ function SignUpForm({ onSignUp }){
                 onChange={(e) => setUserId(e.target.value)}
                 />
                 <br/>
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">Email Address:  </label>
                 <input
                 type="text"
                 id="email"
@@ -78,7 +79,7 @@ function SignUpForm({ onSignUp }){
                 onChange={(e) => setEmail(e.target.value)}
                 />
                 <br/>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password:  </label>
                 <input
                 type="text"
                 id="password"
@@ -87,7 +88,7 @@ function SignUpForm({ onSignUp }){
                 onChange={(e) => setPassword(e.target.value)}
                 />
                 <br/>
-                <input type="submit" />
+                <input type="submit" className="buttons"/>
 
                 <p>{error}</p>
             </form>            
