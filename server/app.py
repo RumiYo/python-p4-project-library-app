@@ -121,6 +121,7 @@ class MemberById(Resource):
         if not member: 
             return {'error': 'Member not found'}, 404
         db.session.delete(member)
+        db.session.commit()
 
 class Books(Resource):
     def get(self):
@@ -171,6 +172,14 @@ class LoanById(Resource):
         db.session.commit()
 
         return make_response(loan.to_dict(), 202)
+
+    def delete(self, id):
+        loan = Loan.query.filter(Loan.id==id).first()
+        if not loan: 
+            return {'error': 'Loan not found'}, 404
+        db.session.delete(loan)
+        db.session.commit()
+
 
 api.add_resource(Signups, '/signup')
 api.add_resource(CheckSession, '/check_session')

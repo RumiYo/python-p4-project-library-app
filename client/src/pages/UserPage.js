@@ -65,7 +65,7 @@ function UserPage(){
                 <Link to={`/account/edit`} >Update your account information</Link> 
                 <br/> <br/>
                 <Link to="/account/delete">Delete your accounts</Link>
-                <Outlet  context={{member: member, updateMember:updateMember}} />
+                <Outlet  context={{member: member, updateMember:updateMember, updateLoans:setLoans}} />
                 <br/>
                 <br/>
             </div>
