@@ -60,7 +60,7 @@ function AccountEdit() {
                 <p>{message}</p>
             </div>
             <br/>
-            <Link to={`/account`}>Close Account Information Update</Link>
+            <Link to={`/account`}>Close</Link>
         </div>
     );
 }

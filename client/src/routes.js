@@ -5,6 +5,7 @@ import BookIndex from "./pages/BookIndex";
 import UserPage from "./pages/UserPage";
 import BookDetails from "./pages/BookDetails";
 import AccountEdit from "./components/AccountEdit";
+import AccountDelete from "./components/AccountDelete";
 
 
 const routes = [
@@ -34,6 +35,10 @@ const routes = [
                     {
                         path: "/account/edit",
                         element: <AccountEdit />
+                    },
+                    {
+                        path: "/account/delete",
+                        element: <AccountDelete />
                     }
                 ]
             }
