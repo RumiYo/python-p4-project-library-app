@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import BookIndex from "./pages/BookIndex";
 import UserPage from "./pages/UserPage";
 import BookDetails from "./pages/BookDetails";
+import AddBook from "./components/AddBook";
 import AccountEdit from "./components/AccountEdit";
 import AccountDelete from "./components/AccountDelete";
 
@@ -25,7 +26,12 @@ const routes = [
                     {
                         path: "/books/:id",
                         element: <BookDetails />
+                    },
+                    {
+                        path: "/books/add",
+                        element: <AddBook />
                     }
+
                 ]
             },
             {

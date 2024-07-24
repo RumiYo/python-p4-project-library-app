@@ -129,6 +129,21 @@ class Books(Resource):
         books_dict = [book.to_dict() for book in books]
         return make_response(books_dict, 200)
 
+    def  post(self):
+        json_data = request.get_json()
+        new_record = Book(
+            title = json_data.get('title'),
+            author = json_data.get('author'),
+            publish_year = json_data.get('publish_year'),
+            page = json_data.get('page'),
+            image_url = json_data.get('image_url'),
+            summary = json_data.get('summary'),
+            star = json_data.get('star')
+        )
+        db.session.add(new_record)
+        db.session.commit()
+        return make_response(new_record.to_dict(), 201)
+
 class BookById(Resource):
     def get(self, id):
         book = Book.query.filter(Book.id==id).first()

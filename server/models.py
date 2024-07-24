@@ -26,7 +26,7 @@ class Book(db.Model, SerializerMixin):
 
     @validates('star')
     def validate_star(self, key, star):
-        if star < 0 or star > 5:
+        if star < 0.00 or star > 5.00:
             raise ValueError('Star must be between 0 and 5')
         return star
 

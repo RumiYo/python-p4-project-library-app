@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext, Link } from "react-router-dom";
 import Book from "../components/Book"
 
 function BookIndex(){
@@ -13,10 +13,11 @@ function BookIndex(){
         .then(setBooks);
     }, [])
 
-
     return (
         <div>
             <h2>Book Index</h2>
+            <Link to="/books/add">Do you want to add your favorite book?</Link>
+            <br/>
             <Outlet context={{booksList: books, member:member }}/>
             <div className="allBooks">
                 {books.map((book) => (
