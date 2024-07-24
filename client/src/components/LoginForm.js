@@ -1,48 +1,57 @@
 import React, { useState } from "react";
+import { useFormik } from 'formik';
+import * as yup from "yup";
 
 function LoginForm({ onLogin }){
-    const [ user_id, setUser_id ] = useState("");
-    const [password, setPassword] = useState("");
+
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    function handleSubmit(e){
-        e.preventDefault();
+    const formSchema = yup.object().shape({
+        user_id: yup.string().required("Must enter a UserID").max(10),
+        password: yup.string().required("Must enter password").max(15),
+      });
+
+    
+    const formik = useFormik({
+    initialValues: {
+        user_id: "",
+        password: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
         setIsLoading(true);
-        console.log(user_id, password)
         fetch("/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+            "Content-Type": "application/json",
             },
-            body: JSON.stringify({ user_id, password}),
+            body: JSON.stringify(values),
         })
-        .then((r)=>{
-            setIsLoading(false);
-            if(r.ok) {
-                r.json()
-                .then((member)=> onLogin(member))
-            } else {
-                r.json()
-                .then((err) => setError(err.error))
-            }
+        .then((r) => {
+        setIsLoading(false);
+        if (r.ok) {
+            r.json().then((member)=> onLogin(member));
+        } else {
+            r.json().then((err) => setError(err.error));
+        }
         })
     }
-    
-    console.log(error)
+    })
+
         
     return (
         <div >
             <h2>Login</h2>
-            <form className="LoginSignupForms" onSubmit={handleSubmit}>
+            <form className="LoginSignupForms" onSubmit={formik.handleSubmit}>
                 <p>Type your UserID and Password:</p>
                 <label htmlFor="user_id">UserID: </label>
                 <input
                     type="text"
                     id="user_id"
                     autoComplete="off"
-                    value={user_id}
-                    onChange={(e) => setUser_id(e.target.value)}
+                    value={formik.values.user_id}
+                    onChange={formik.handleChange}
                 />
 
                 <label htmlFor="password">   Password: </label>
@@ -50,15 +59,13 @@ function LoginForm({ onLogin }){
                     type="password"
                     id="password"
                     autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
                 />
                 <br/>
                 <input type="submit" className="buttons"/>
-                {isLoading ? "Loading..." : ""}          
-
-                <p>{error}</p>
-
+                {isLoading && <p>Loading...</p>}
+                {error && <p>{error}</p>}
             </form>
         </div>
     )

@@ -1,41 +1,62 @@
 import { Link, useOutletContext } from "react-router-dom";
 import { useState } from "react";
+import { useFormik } from 'formik';
+import * as yup from "yup";
 
 function AccountEdit() {
     
     const { member, updateMember } = useOutletContext(); 
 
     const [ keyValue, setKeyValue ] = useState("user_id")
-    const [ inputValue, setInputValue ] = useState("") 
     const [ message , setMessage] = useState("")  
 
-    function handleSubmit(e){
-        e.preventDefault();
-        const formData = {
-            [keyValue]: inputValue
+    const formSchema = yup.object().shape({
+        first_name: yup.string().required("Must enter First Name").max(15),
+        last_name: yup.string().required("Must enter Last Name").max(15),
+        user_id: yup.string().required("Must enter a UserID").max(10),
+        email: yup.string().email("Invalid email").required("Must enter email"),
+      });
+
+      const formik = useFormik({
+        initialValues: {
+          first_name: "",
+          last_name: "",
+          user_id: "",
+          email: "",
+        },
+        validationSchema: formSchema,
+        onSubmit: (values) => {
+            // console.log("Form submitted");
+            // console.log("Key Value: ", keyValue);
+            // console.log("Form Data: ", formData);
+            // const formData = {
+            //     [keyValue]: values[keyValue]
+            // };
+            fetch(`/members/${member.id}`, {
+                method: "PATCH",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            })
+            .then((r) =>{
+                if(r.ok){
+                    r.json()
+                    .then((updatedMember)=>{
+                        updateMember(updatedMember);
+                        setMessage("Successfully Updated");
+                        console.log(updatedMember)
+                    });
+                } else {
+                    r.json()
+                    .then((err) => setMessage(err.error));
+                    console.log(message);
+                }
+            }).catch((error) => {
+                console.error('Error: ', error);
+            })
         }
-        fetch(`/members/${member.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          })
-          .then((r) => {
-            if (r.ok) {
-              r.json()
-              .then((updatedMember) => {
-                updateMember(updatedMember)
-                setMessage("Successfully Updated")
-              });
-             } else {
-                r.json().then((err) => setMessage(err.error));
-                console.log(message)
-             }
-          }).catch((error) => {
-            console.error('Error:', error);
-        });
-    }
+    });
 
     return (
         <div id="memberEdit">
@@ -48,12 +69,14 @@ function AccountEdit() {
                     <option value="last_name">Last Name</option>
                     <option value="email">Email Address</option>
                 </select>
-                <form onSubmit={handleSubmit}>
-                <input
+                <form onSubmit={formik.handleSubmit}>
+                    <input
                         type="text"
                         id={keyValue}
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        name={keyValue}
+                        autoComplete="off"
+                        value={formik.values[keyValue]}
+                        onChange={formik.handleChange}
                     />
                     <input type="submit" className="buttons"/>
                 </form>

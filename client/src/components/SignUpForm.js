@@ -13,7 +13,7 @@ function SignUpForm({ onSignUp }){
     last_name: yup.string().required("Must enter Last Name").max(15),
     user_id: yup.string().required("Must enter a UserID").max(10),
     email: yup.string().email("Invalid email").required("Must enter email"),
-    password_hash: yup.string().required("Must enter First Name").max(15),
+    password_hash: yup.string().required("Must enter password").max(15),
   });
 
     const formik = useFormik({
