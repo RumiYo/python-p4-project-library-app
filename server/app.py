@@ -112,9 +112,8 @@ class MemberById(Resource):
             else:
                 return {'error': f'Invalid field: {key}'}, 400
         
-        db.session.add(member)
         db.session.commit()
-        return make_response(member.to_dict(), 201)
+        return make_response(member.to_dict(), 200)
 
     def delete(self,id):
         member = Member.query.filter(Member.id==id).first()
