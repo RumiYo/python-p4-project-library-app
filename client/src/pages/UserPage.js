@@ -36,7 +36,7 @@ function UserPage(){
 
     return (
         <div>
-            <h2>Account Summary</h2>
+            <h2>{member.first_name}'s Account Summary</h2>
             <hr />
             <h3>Loaned or Returned Books</h3>    
             <table id="accountBooksList">
