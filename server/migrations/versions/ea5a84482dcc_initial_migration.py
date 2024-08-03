@@ -1,8 +1,8 @@
-"""setup database with relationships
+"""initial migration
 
-Revision ID: ee05def31475
-Revises: 08bec4b5f606
-Create Date: 2024-07-17 12:16:05.497965
+Revision ID: ea5a84482dcc
+Revises: 
+Create Date: 2024-08-03 12:37:50.979308
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ee05def31475'
-down_revision = '08bec4b5f606'
+revision = 'ea5a84482dcc'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -33,17 +33,19 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(), nullable=False),
     sa.Column('last_name', sa.String(), nullable=False),
-    sa.Column('user_id', sa.String(), nullable=False),
+    sa.Column('username', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('user_id')
+    sa.UniqueConstraint('username')
     )
     op.create_table('loans',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('loan_date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('returned_date', sa.DateTime(), nullable=True),
+    sa.Column('loan_date', sa.Date(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('returned_date', sa.Date(), nullable=True),
     sa.Column('book_id', sa.Integer(), nullable=True),
     sa.Column('member_id', sa.Integer(), nullable=True),
+    sa.CheckConstraint('loan_date < returned_date', name='check_loan_date_before_returned_date'),
     sa.ForeignKeyConstraint(['book_id'], ['books.id'], name=op.f('fk_loans_book_id_books')),
     sa.ForeignKeyConstraint(['member_id'], ['members.id'], name=op.f('fk_loans_member_id_members')),
     sa.PrimaryKeyConstraint('id')

@@ -11,7 +11,7 @@ function SignUpForm({ onSignUp }){
   const formSchema = yup.object().shape({
     first_name: yup.string().required("Must enter First Name").max(15),
     last_name: yup.string().required("Must enter Last Name").max(15),
-    user_id: yup.string().required("Must enter a UserID").max(10),
+    username: yup.string().required("Must enter a User Name").max(10),
     email: yup.string().email("Invalid email").required("Must enter email"),
     password_hash: yup.string().required("Must enter password").max(15),
   });
@@ -20,7 +20,7 @@ function SignUpForm({ onSignUp }){
       initialValues: {
         first_name: "",
         last_name: "",
-        user_id: "",
+        username: "",
         email: "",
         password_hash: "",
       },
@@ -68,12 +68,12 @@ function SignUpForm({ onSignUp }){
                 onChange={formik.handleChange}
                 />
                 <br/>
-                <label htmlFor="user_id">UserID:  </label>
+                <label htmlFor="username">User Name:  </label>
                 <input
                 type="text"
-                id="user_id"
+                id="username"
                 autoComplete="off"
-                value={formik.values.user_id}
+                value={formik.values.username}
                 onChange={formik.handleChange}
                 />
                 <br/>

@@ -7,7 +7,7 @@ function AccountEdit() {
 
     const { member, updateMember } = useOutletContext(); 
 
-    const [keyValue, setKeyValue] = useState("user_id");
+    const [keyValue, setKeyValue] = useState("username");
     const [message, setMessage] = useState("");  
 
     const getValidationSchema = (key) => {
@@ -20,9 +20,9 @@ function AccountEdit() {
                 return yup.object().shape({
                     last_name: yup.string().required("Must enter Last Name").max(15),
                 });
-            case 'user_id':
+            case 'username':
                 return yup.object().shape({
-                    user_id: yup.string().required("Must enter a UserID").max(10),
+                    username: yup.string().required("Must enter a User Name").max(10),
                 });
             case 'email':
                 return yup.object().shape({
@@ -38,13 +38,12 @@ function AccountEdit() {
         initialValues: {
             first_name: "",
             last_name: "",
-            user_id: "",
+            username: "",
             email: "",
         },
         validationSchema: getValidationSchema(keyValue),
         onSubmit: (values) => {
             console.log("Formik onSubmit values:", values);
-            console.log("Form submitted");
             console.log("Key Value: ", keyValue);
             console.log("Sending PATCH request to:", `/members/${member.id}`);
             
@@ -90,7 +89,7 @@ function AccountEdit() {
             <div className="dropdown">
                 <label htmlFor="infochange">I want to change:</label>
                 <select id="infochange" name="infochange" onChange={(e) => setKeyValue(e.target.value)}>
-                    <option value="user_id">UserID</option>
+                    <option value="username">User Name</option>
                     <option value="first_name">First Name</option>
                     <option value="last_name">Last Name</option>
                     <option value="email">Email Address</option>

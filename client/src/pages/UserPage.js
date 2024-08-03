@@ -57,7 +57,7 @@ function UserPage(){
             <hr />
             <h3>Account Information</h3>
             <div id="accountDetail">
-                <p>UserID:  {member.user_id}</p>
+                <p>User Name:  {member.username}</p>
                 <p>First Name:  {member.first_name}</p>
                 <p>Last Name:  {member.last_name}</p>
                 <p>Email Address:  {member.email}</p>

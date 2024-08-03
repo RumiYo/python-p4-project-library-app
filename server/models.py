@@ -41,7 +41,7 @@ class Member(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.String, nullable=False, unique=True)
+    username = db.Column(db.String, nullable=False, unique=True)
     email = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
@@ -81,13 +81,13 @@ class Member(db.Model, SerializerMixin):
     #         "id": self.id,
     #         "first_name": self.first_name, 
     #         "last_name": self.last_name,
-    #         "user_id": self.user_id,
+    #         "username": self.username,
     #         "email": self.email,
 
     #     }
 
     def __repr__(self):
-        return f'<Member {self.id}: {self.first_name}, {self.last_name}, {self.user_id}, {self.email}>'
+        return f'<Member {self.id}: {self.first_name}, {self.last_name}, {self.username}, {self.email}>'
 
 class Loan(db.Model, SerializerMixin):
     __tablename__ = 'loans'

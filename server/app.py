@@ -22,15 +22,15 @@ class Signups(Resource):
 
     def post(self):
         json_data = request.get_json()
-        if not json_data.get('user_id') or not json_data.get('first_name') or not json_data.get('last_name')or not json_data.get('email'):
+        if not json_data.get('username') or not json_data.get('first_name') or not json_data.get('last_name')or not json_data.get('email'):
             return {"error": "All input fields cannot be empty"}, 422 
-        duplicate_name_member = Member.query.filter(Member.user_id==json_data['user_id']).first()
+        duplicate_name_member = Member.query.filter(Member.username==json_data['username']).first()
         if duplicate_name_member:
-            return {"error": "This user_id already exists. Try with a new user id"}, 422
+            return {"error": "This username already exists. Try with a new user id"}, 422
         new_record = Member(
             first_name=json_data.get('first_name'),
             last_name=json_data.get('last_name'),
-            user_id=json_data.get('user_id'),
+            username=json_data.get('username'),
             email=json_data.get('email'),
         )
         new_record.password_hash = json_data.get('password_hash')
@@ -54,7 +54,7 @@ class CheckSession(Resource):
 class Login(Resource):
     def post(self):
         json_data = request.get_json()
-        member = Member.query.filter(Member.user_id==json_data.get('user_id')).first()
+        member = Member.query.filter(Member.username==json_data.get('username')).first()
         if member and member.authenticate(json_data.get('password')):
             session['user_id'] = member.id
             return member.to_dict()
@@ -80,7 +80,7 @@ class Members(Resource):
         new_record = Member(
             first_name=json_data.get('first_name'),
             last_name=json_data.get('last_name'),
-            user_id=json_data.get('user_id'),
+            username=json_data.get('username'),
             email=json_data.get('email'),
         )
         db.session.add(new_record)
@@ -128,7 +128,7 @@ class Books(Resource):
         books_dict = [book.to_dict() for book in books]
         return make_response(books_dict, 200)
 
-    def  post(self):
+    def post(self):
         json_data = request.get_json()
         new_record = Book(
             title = json_data.get('title'),
@@ -194,6 +194,24 @@ class LoanById(Resource):
         db.session.delete(loan)
         db.session.commit()
 
+# Live coding 
+# /book_loans/3
+# Return all of the books with at least that number of loans
+# get 
+
+class Bookloaned(Resource):
+    def get(self, number):
+        books = Book.query.all()
+        for book in books: 
+            if len(book.loans) >= number:
+                booksloaned.append(book)
+        if not booksloaned:
+            return {'error': 'No data'}
+        books_dict = [book.to_dict() for book in booksloaned]
+        return make_response(books_dict, 200)
+
+
+
 
 api.add_resource(Signups, '/signup')
 api.add_resource(CheckSession, '/check_session')
@@ -205,6 +223,7 @@ api.add_resource(Books, '/books')
 api.add_resource(BookById, '/books/<int:id>')
 api.add_resource(Loans, '/loans')
 api.add_resource(LoanById, '/loans/<int:id>')
+api.add_resource(Bookloaned, '/book_loaned/<int:number>')
 
 
 if __name__ == '__main__':

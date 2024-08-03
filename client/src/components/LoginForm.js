@@ -8,14 +8,14 @@ function LoginForm({ onLogin }){
     const [isLoading, setIsLoading] = useState(false);
 
     const formSchema = yup.object().shape({
-        user_id: yup.string().required("Must enter a UserID").max(10),
+        username: yup.string().required("Must enter a User Name").max(10),
         password: yup.string().required("Must enter password").max(15),
       });
 
     
     const formik = useFormik({
     initialValues: {
-        user_id: "",
+        username: "",
         password: "",
     },
     validationSchema: formSchema,
@@ -44,13 +44,13 @@ function LoginForm({ onLogin }){
         <div >
             <h2>Login</h2>
             <form className="LoginSignupForms" onSubmit={formik.handleSubmit}>
-                <p>Type your UserID and Password:</p>
-                <label htmlFor="user_id">UserID: </label>
+                <p>Type your UserName and Password:</p>
+                <label htmlFor="username">User Name: </label>
                 <input
                     type="text"
-                    id="user_id"
+                    id="username"
                     autoComplete="off"
-                    value={formik.values.user_id}
+                    value={formik.values.username}
                     onChange={formik.handleChange}
                 />
 
